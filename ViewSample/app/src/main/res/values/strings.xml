@@ -1,0 +1,36 @@
+<resources>
+<!--    アプリ名-->
+    <string name="app_name">画面部品サンプル</string>
+<!--    テキストボックス-->
+    <string name="tv_msg">お名前を入力してください。</string>
+<!--    ボタン-->
+    <string name="bt_save">保存</string>
+<!--    チェックボックス-->
+    <string name="cb_drink">ドリンク</string>
+    <string name="cb_food">フード</string>
+<!--    ラジオボタン-->
+    <string name="rb_male">男</string>
+    <string name="rb_female">女</string>
+<!--    ドロップダウンリスト-->
+    <string-array name="sp_currylist">
+        <item>ドライカレー</item>
+        <item>カツカレー</item>
+        <item>ビーフカレー</item>
+        <item>チキンカレー</item>
+        <item>シーフードカレー</item>
+        <item>キーマカレー</item>
+        <item>グリーンカレー</item>
+    </string-array>
+<!--    リストデータ-->
+    <string-array name="lv_cocktaillist">
+        <item>ホワイトレディー</item>
+        <item>バラライカ</item>
+        <item>ＸＹＺ</item>
+        <item>ニューヨーク</item>
+        <item>マンハッタン</item>
+        <item>ミシシッピミュール</item>
+        <item>ブルーハワイ</item>
+        <item>マイタイ</item>
+        <item>マティーニ</item>
+    </string-array>
+</resources>
