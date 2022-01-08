@@ -1,7 +1,10 @@
 package com.websarva.wings.android.intentsamplw
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
+import android.widget.AdapterView
 import android.widget.ListView
 import android.widget.SimpleAdapter
 
@@ -28,7 +31,33 @@ class MainActivity : AppCompatActivity() {
             , to)
         //アダプタの登録
         lvMenu.adapter = adapter
+
+        //リストタップのリスナクラス登録
+        lvMenu.onItemClickListener = ListItemClickListener()
     }
+
+    //リストがタップされた時の処理が記述されたメンバクラス
+    private inner class ListItemClickListener : AdapterView.OnItemClickListener {
+        override fun onItemClick(parent: AdapterView<*>
+                                 , view: View?
+                                 , position: Int
+                                 , id: Long) {
+            //タップされた行のデータを取得
+            val item = parent.getItemAtPosition(position) as MutableMap<String, String>
+            //定食名と金額を取得
+            val menuName = item["name"]
+            val menuPrice = item["price"]
+            //インテントオブジェクトを生成
+            val intent2MenuThanks = Intent(this@MainActivity
+                , MenuThanksActivity::class.java)
+            //第2画面に送るデータを格納
+            intent2MenuThanks.putExtra("menuName", menuName)
+            intent2MenuThanks.putExtra("menuPrice", menuPrice)
+            //第2画面の起動
+            startActivity(intent2MenuThanks)
+        }
+    }
+
 
     //メニューリストに追加
     private fun addMenuList(): MutableList<MutableMap<String, String>> {

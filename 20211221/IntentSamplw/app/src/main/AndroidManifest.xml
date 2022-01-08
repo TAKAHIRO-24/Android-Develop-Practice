@@ -10,9 +10,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.IntentSamplw">
         <activity
-            android:name=".MainActivity"
-            android:exported="true"
+            android:name=".MenuThanksActivity"
             >
+        </activity>
+        <activity
+            android:name=".MainActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
