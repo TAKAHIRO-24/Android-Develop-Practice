@@ -1,3 +1,34 @@
 <resources>
-    <string name="app_name">ViewSample</string>
+    <string name="app_name">画面部品サンプル</string>
+    <string name="tv_msg">お名前を入力してください。</string>
+    <string name="bt_save">保存</string>
+    <string name="cb_drink">ドリンク</string>
+    <string name="cb_food">フード</string>
+    <string name="rb_male">男</string>
+    <string name="rb_female">女</string>
+    <string-array name="sp_currylist">
+        <item>ドライカレー</item>
+        <item>カツカレー</item>
+        <item>ビーフカレー</item>
+        <item>チキンカレー</item>
+        <item>シーフードカレー</item>
+        <item>キーマカレー</item>
+        <item>グリーンカレー</item>
+    </string-array>
+    <string-array name="lv_cocktaillist">
+        <item>ホワイトレディー</item>
+        <item>バラライカ</item>
+        <item>XYZ</item>
+        <item>ニューヨーク</item>
+        <item>マンハッタン</item>
+        <item>ミシシッピミュール</item>
+        <item>ブルーハワイ</item>
+        <item>マイタイ</item>
+        <item>マティーニ</item>
+        <item>sample1</item>
+        <item>sample2</item>
+        <item>sample3</item>
+        <item>sample4</item>
+        <item>sample5</item>
+    </string-array>
 </resources>
