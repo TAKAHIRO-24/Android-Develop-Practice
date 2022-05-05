@@ -8,9 +8,9 @@ android {
     buildToolsVersion "32.0.0"
 
     defaultConfig {
-        applicationId "com.websarva.wings.android.helloandroid"
+        applicationId "com.websarva.wings.android.viewsample"
         minSdkVersion 16
-        targetSdkVersion 30
+        targetSdkVersion 32
         versionCode 1
         versionName "1.0"
 
