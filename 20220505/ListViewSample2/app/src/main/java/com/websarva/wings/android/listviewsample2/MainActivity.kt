@@ -29,20 +29,5 @@ class MainActivity : AppCompatActivity() {
                                     ,menuList)
         //リストビューにアダプタオブジェクトを設定。
         lvMenu.adapter = adapter
-
-        //リストにリスナーを設定。
-        lvMenu.onItemClickListener = ListItemClickLitener()
-    }
-
-    private inner class ListItemClickLitener : AdapterView.OnItemClickListener {
-        override fun onItemClick(parent: AdapterView<*>, view: View, position: Int, id: Long) {
-            //タップされた定食名を取得。
-            val item = parent.getItemAtPosition(position) as String
-            //トーストで表示する文字列を生成。
-            val show = "あなたが選んだ定食：" + item
-            //トーストの表示。
-            Toast.makeText(this@MainActivity, show, Toast.LENGTH_LONG).show()
-        }
-
     }
 }
