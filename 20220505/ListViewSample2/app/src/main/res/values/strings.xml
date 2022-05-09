@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">リスト選択サンプル２</string>
     <string name="dialog_title">注文確認</string>
-    <string name="dalog_msg">選択された定食を注文します。よろしいですか。</string>
+    <string name="dialog_msg">選択された定食を注文します。よろしいですか。</string>
     <string name="dialog_btn_ok">注文</string>
     <string name="dialog_btn_ng">キャンセル</string>
     <string name="dialog_btn_nu">問合せ</string>

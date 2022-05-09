@@ -3,11 +3,9 @@ package com.websarva.wings.android.listviewsample2
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
-import android.view.ViewParent
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.ListView
-import android.widget.Toast
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -29,5 +27,17 @@ class MainActivity : AppCompatActivity() {
                                     ,menuList)
         //リストビューにアダプタオブジェクトを設定。
         lvMenu.adapter = adapter
+
+        //リストビューにリスナを設定。
+        lvMenu.onItemClickListener = ListItemClickListener()
+    }
+
+    private inner class ListItemClickListener : AdapterView.OnItemClickListener {
+        override fun onItemClick(parent: AdapterView<*>, view: View, position: Int, id: Long) {
+            //注文確認ダイアログフラグメントオブジェクトを生成。
+            val dialogFragment = OrderConfirmDialogFragment()
+            //ダイアログ表示。
+            dialogFragment.show(supportFragmentManager, "OrderConfirmDialogFragment")
+        }
     }
 }
