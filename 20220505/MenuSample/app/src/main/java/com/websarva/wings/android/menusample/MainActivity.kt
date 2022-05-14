@@ -3,6 +3,8 @@ package com.websarva.wings.android.menusample
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ListView
@@ -30,6 +32,45 @@ class MainActivity : AppCompatActivity() {
         lvMenu.adapter = adapter
         //リストタップのリスナクラス登録。
         lvMenu.onItemClickListener = ListItemClickListener()
+    }
+
+    //オプションメニュー作成
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        //オプションメニュー用xmlファイルをインフレイト
+        menuInflater.inflate(R.menu.menu_options_menu_list, menu)
+        return true
+    }
+
+    //オプションメニュー選択時処理
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        //戻り値用の変数を初期値trueで用意。
+        var returnVal = true
+        //選択されたメニューのIDのR値による処理の分岐。
+        when(item.itemId) {
+            //定食メニューが選択された場合の処理。
+            R.id.menuListOptionTeishoku -> {
+                //定食メニューリストデータの生成。
+                _menuList = createTeishokuList()
+            }
+            //カレーメニューが選択された場合の処理。
+            R.id.menuListOptionCurry -> {
+                //カレーメニューリストデータの生成。
+                _menuList = createCurryList()
+            }
+            //それ以外
+            else -> {
+                //親クラスの同名メソッドを呼び出し、その戻り値をreturnValとする。
+                returnVal = super.onOptionsItemSelected(item)
+            }
+        }
+        //画面部品ListViewを取得。
+        val lvMenu = findViewById<ListView>(R.id.lvMenu)
+        //SimpleAdapterを選択されたメニューデータで生成。
+        val adapter = SimpleAdapter(this@MainActivity, _menuList, R.layout.row, _from, _to)
+        //アダプタの登録。
+        lvMenu.adapter = adapter
+
+        return returnVal
     }
 
     private inner class ListItemClickListener : AdapterView.OnItemClickListener {
@@ -107,6 +148,78 @@ class MainActivity : AppCompatActivity() {
         menu = mutableMapOf<String, Any>("name" to "麻婆豆腐定食"
                                         ,"price" to 800
                                         ,"desc" to "麻婆豆腐にサラダ、ご飯とお味噌汁がつきます。")
+        menuList.add(menu)
+
+        return menuList
+    }
+
+    private fun createCurryList(): MutableList<MutableMap<String, Any>> {
+        //定食メニューリスト用のListオブジェクトを用意。
+        val menuList: MutableList<MutableMap<String, Any>> = mutableListOf()
+        //「ビーフカレー」のデータを格納するMapオブジェクトの用意とmenuListへのデータ登録。
+        var menu = mutableMapOf<String, Any>("name" to "ビーフカレー"
+                                            ,"price" to 520
+                                            ,"desc" to "特選スパイスをきかせた国産ビーフ100%のカレーです。")
+        menuList.add(menu)
+        //「ポークカレー」のデータを格納するMapオブジェクトの用意とmenuListへのデータ登録。
+        menu = mutableMapOf<String, Any>("name" to "ポークカレー"
+                                        ,"price" to 420
+                                        ,"desc" to "特選スパイスをきかせた国産ポーク100%のカレーです。")
+        menuList.add(menu)
+        //「キーマカレー」のデータを格納するMapオブジェクトの用意とmenuListへのデータ登録。
+        menu = mutableMapOf<String, Any>("name" to "キーマカレー"
+                                        ,"price" to 850
+                                        ,"desc" to "特選スパイスをきかせた国産キーマ肉100%のカレーです。")
+        menuList.add(menu)
+        //「チキンカレー」のデータを格納するMapオブジェクトの用意とmenuListへのデータ登録。
+        menu = mutableMapOf<String, Any>("name" to "チキンカレー"
+                                        ,"price" to 1000
+                                        ,"desc" to "特選スパイスをきかせた国産チキン100%のカレーです。")
+        menuList.add(menu)
+        //「バターチキンカレー」のデータを格納するMapオブジェクトの用意とmenuListへのデータ登録。
+        menu = mutableMapOf<String, Any>("name" to "バターチキンカレー"
+                                        ,"price" to 750
+                                        ,"desc" to "特選スパイスをきかせた国産バーターチキン100%のカレーです。")
+        menuList.add(menu)
+        //「カツカレー」のデータを格納するMapオブジェクトの用意とmenuListへのデータ登録。
+        menu = mutableMapOf<String, Any>("name" to "カツカレー"
+                                        ,"price" to 900
+                                        ,"desc" to "特選スパイスをきかせた国産カツ100%のカレーです。")
+        menuList.add(menu)
+        //「スープカレー」のデータを格納するMapオブジェクトの用意とmenuListへのデータ登録。
+        menu = mutableMapOf<String, Any>("name" to "スープカレー"
+                                        ,"price" to 850
+                                        ,"desc" to "特選スパイスをきかせた国産スープ100%のカレーです。")
+        menuList.add(menu)
+        //「シーフードカレー」のデータを格納するMapオブジェクトの用意とmenuListへのデータ登録。
+        menu = mutableMapOf<String, Any>("name" to "シーフードカレー"
+                                        ,"price" to 900
+                                        ,"desc" to "特選スパイスをきかせた国産シーフード100%のカレーです。")
+        menuList.add(menu)
+        //「グリーンカレー」のデータを格納するMapオブジェクトの用意とmenuListへのデータ登録。
+        menu = mutableMapOf<String, Any>("name" to "グリーンカレー"
+                                        ,"price" to 850
+                                        ,"desc" to "特選スパイスをきかせた国産グリーン100%のカレーです。")
+        menuList.add(menu)
+        //「サグパニール」のデータを格納するMapオブジェクトの用意とmenuListへのデータ登録。
+        menu = mutableMapOf<String, Any>("name" to "サグニパール"
+                                        ,"price" to 750
+                                        ,"desc" to "特選スパイスをきかせた国産ほうれん草100%のカレーです。")
+        menuList.add(menu)
+        //「マッサマンカレー」のデータを格納するMapオブジェクトの用意とmenuListへのデータ登録。
+        menu = mutableMapOf<String, Any>("name" to "マッサマンカレー"
+                                        ,"price" to 800
+                                        ,"desc" to "特選スパイスをきかせた国産マッサマン100%のカレーです。")
+        menuList.add(menu)
+        //「ドライカレー」のデータを格納するMapオブジェクトの用意とmenuListへのデータ登録。
+        menu = mutableMapOf<String, Any>("name" to "ドライカレー"
+                                        ,"price" to 600
+                                        ,"desc" to "特選スパイスをきかせた国産水100%のカレーです。")
+        menuList.add(menu)
+        //「チャナマサラ」のデータを格納するMapオブジェクトの用意とmenuListへのデータ登録。
+        menu = mutableMapOf<String, Any>("name" to "チャナマサラ"
+                                        ,"price" to 900
+                                        ,"desc" to "特選スパイスをきかせた国産ヒヨコマメ100%のカレーです。")
         menuList.add(menu)
 
         return menuList

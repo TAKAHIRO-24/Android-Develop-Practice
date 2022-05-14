@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/menuListOptionTeishoku"
+        app:showAsAction="never"
+        android:title="@string/menu_list_options_teishoku"
+        />
+    <item
+        android:id="@+id/menuListOptionCurry"
+        app:showAsAction="never"
+        android:title="@string/menu_list_options_curry"
+        />
+    <item
+        app:showAsAction="never"
+        android:title="Sample"
+        >
+        <menu>
+            <item
+                app:showAsAction="never"
+                android:title="Sample1"
+                />
+            <item
+                app:showAsAction="never"
+                android:title="Sample2"
+                />
+            <item
+                app:showAsAction="never"
+                android:title="Sample3"
+                />
+        </menu>
+    </item>
+
+</menu>
