@@ -7,11 +7,11 @@
     >
 
     <Button
-        android:id="@+id/btnext"
+        android:id="@+id/btPrevious"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:onClick="onButtonClick"
-        android:text="@string/bt_next"
+        android:text="@string/bt_previous"
         />
 
 </LinearLayout>
