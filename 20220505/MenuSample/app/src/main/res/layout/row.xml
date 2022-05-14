@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    >
+
+<!--定食名を表示するTextView    -->
+    <TextView
+        android:id="@+id/tvMenuNameRow"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:textSize="18sp"
+        />
+
+<!--金額と「円」を横並びに並べるLinearLayout    -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="10dp"
+        android:orientation="horizontal"
+        >
+<!--    金額を表示するTextView    -->
+        <TextView
+            android:id="@+id/tvMenuPriceRow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="14sp"
+            />
+<!--    「円」を表示するTextView-->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/tv_menu_unit"
+            android:textSize="14sp"
+            />
+    </LinearLayout>
+
+</LinearLayout>
