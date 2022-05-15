@@ -6,8 +6,8 @@
     >
 
     <fragment
-        android:id="@+id/fragmentMenuList"
-        android:name="com.websarva.wings.android.fragmentsample.MenuListFragment"
+        android:id="@+id/fragmentMenuThanks"
+        android:name="com.websarva.wings.android.fragmentsample.MenuThanksFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         />
