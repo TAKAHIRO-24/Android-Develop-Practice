@@ -12,6 +12,9 @@ import android.widget.SimpleAdapter
 
 class MenuListFragment : Fragment() {
 
+    //大画面かどうかの判定フラグ。
+    private var _isLayoutLarge = true
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -40,6 +43,19 @@ class MenuListFragment : Fragment() {
         return view
     }
 
+    //画面サイズフラグを取得
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        //親クラスのメソッド呼び出し。
+        super.onActivityCreated(savedInstanceState)
+        //自分が所属するアクティビティからmenuThanksFrameを取得。
+        val menuThanksFrame = activity?.findViewById<View>(R.id.menuThanksFrame)
+        //menuThanksFrameがnull、つまり存在しない場合
+        if(menuThanksFrame == null) {
+            //画面判定フラグを通常画面とする
+            _isLayoutLarge = false
+        }
+    }
+
     //リストがタップされた時の処理が記述されたメンバクラス。
     private inner class ListItemClickListener : AdapterView.OnItemClickListener {
         override fun onItemClick(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
@@ -48,13 +64,42 @@ class MenuListFragment : Fragment() {
             //定食名と金額を取得。
             val menuName = item["name"]
             val menuPrice = item["price"]
-            //インテントオブジェクトを生成。
-            val intent2MenuThanks = Intent(activity, MenuThanksActivity::class.java)
-            //第２画面に送るデータを格納。
-            intent2MenuThanks.putExtra("menuName", menuName)
-            intent2MenuThanks.putExtra("menuPrice", menuPrice)
-            //第２画面の起動。
-            startActivity(intent2MenuThanks)
+//            //インテントオブジェクトを生成。
+//            val intent2MenuThanks = Intent(activity, MenuThanksActivity::class.java)
+//            //第２画面に送るデータを格納。
+//            intent2MenuThanks.putExtra("menuName", menuName)
+//            intent2MenuThanks.putExtra("menuPrice", menuPrice)
+//            //第２画面の起動。
+//            startActivity(intent2MenuThanks)
+
+            //引継ぎデータをまとめて格納できるBundleオブジェクト生成。
+            val bundle = Bundle()
+            //Bundleオブジェクトに引継ぎデータを格納。
+            bundle.putString("menuName", menuName)
+            bundle.putString("menuPrice", menuPrice)
+
+            //大画面の場合。
+            if(_isLayoutLarge) {
+                //フラグメントトランザクションの開始。
+                val transaction = fragmentManager?.beginTransaction()
+                //注文完了フラグメントを生成。
+                val menuThanksFragment = MenuThanksFragment()
+                //引継ぎデータを注文完了フラグメントに格納。
+                menuThanksFragment.arguments = bundle
+                //生成した注文完了フラグメントをmenuThanksFrameレイアウト部品に追加（置き換え）。
+                transaction?.replace(R.id.menuThanksFrame, menuThanksFragment)
+                //フラグメントトランザクションのコミット。
+                transaction?.commit()
+            }
+            //通常画面の場合。
+            else {
+                //インテントオブジェクトを生成。
+                val intent2MenuThanks = Intent(activity, MenuThanksActivity::class.java)
+                //第２画面に送るデータを格納。ここでは、Bundleオブジェクトとしてまとめて格納。
+                intent2MenuThanks.putExtras(bundle)
+                //第２画面の起動。
+                startActivity(intent2MenuThanks)
+            }
         }
     }
 

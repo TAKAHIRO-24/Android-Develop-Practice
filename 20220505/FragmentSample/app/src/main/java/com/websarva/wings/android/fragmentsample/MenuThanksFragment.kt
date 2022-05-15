@@ -9,16 +9,48 @@ import android.widget.Button
 import android.widget.TextView
 
 class MenuThanksFragment : Fragment() {
+
+    //大画面かどうかの判定フラグ。
+    private var _isLayoutLarge = true
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        //親クラスのonCreate()の呼び出し。
+        super.onCreate(savedInstanceState)
+        //フラグメントマネージャーからメニューリストフラグメントを取得。
+        val menuListFragment = fragmentManager?.findFragmentById(R.id.fragmentMenuList)
+        //メニューリストフラグメントがnull、つまり存在しない場合
+        if(menuListFragment == null) {
+            //画面判定フラグを通常画面とする。
+            _isLayoutLarge = false
+        }
+    }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         //フラグメントで表示する画面をXMLファイルからインフレートする。
         val view = inflater.inflate(R.layout.fragment_menu_thanks, container, false)
-        //所属アクティビティからインテントを取得。
-        val intent = activity?.intent
-        //インテントから引継ぎデータをまとめたもの（Bundleオブジェクト）を取得。
-        val extras = intent?.extras
+
+//        //所属アクティビティからインテントを取得。
+//        val intent = activity?.intent
+//        //インテントから引継ぎデータをまとめたもの（Bundleオブジェクト）を取得。
+//        val extras = intent?.extras
+
+        //Bundleオブジェクトを宣言。
+        val extras: Bundle?
+        //大画面の場合
+        if(_isLayoutLarge) {
+            //このフラグメントに埋め込まれた引継ぎデータを取得。
+            extras = arguments
+        }
+        //通常画面の場合
+        else {
+            //所属アクティビティからインテントを取得。
+            val intent = activity?.intent
+            //インテントから引継ぎデータをまとめたもの（Bundleオブジェクト）を取得。
+            extras = intent?.extras
+        }
+
         //定食名と金額を取得。
         val menuName = extras?.getString("menuName")
         val menuPrice = extras?.getString("menuPrice")
@@ -41,8 +73,22 @@ class MenuThanksFragment : Fragment() {
     //ボタンが押されたときの処理が記述されたメンバクラス。
     private inner class ButtonClickListener : View.OnClickListener {
         override fun onClick(view: View?) {
-            //自分が所属するアクティビティを終了。
-            activity?.finish()
+//            //自分が所属するアクティビティを終了。
+//            activity?.finish()
+            //大画面の場合
+            if(_isLayoutLarge) {
+                //フラグメントトランザクションの開始。
+                val transaction = fragmentManager?.beginTransaction()
+                //自分自身を削除。
+                transaction?.remove(this@MenuThanksFragment)
+                //フラグメントトランザクションのコミット。
+                transaction?.commit()
+            }
+            //通常画面の場合
+            else {
+                //自分が所属するアクティビティを終了。
+                activity?.finish()
+            }
         }
     }
 }
