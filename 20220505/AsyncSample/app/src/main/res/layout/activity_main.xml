@@ -1,18 +1,56 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    android:orientation="vertical"
+    >
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+<!--    都市リストを表示するListView-->
+    <ListView
+        android:id="@+id/lvCityList"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.5"
+        />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+
+<!--    お天気情報を表示する画面下半分のLinearLayout-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="10dp"
+        android:layout_weight="0.5"
+        android:orientation="vertical"
+        >
+
+<!--        「お天気詳細」と表示するTextView-->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:gravity="center"
+            android:text="@string/tv_winfo_title"
+            android:textSize="25sp"
+            />
+
+<!--        「〇〇の天気」と表示するTextView-->
+        <TextView
+            android:id="@+id/tvWeatherTelop"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:textSize="25sp"
+            />
+
+<!--        天気の詳細情報を表示するTextView-->
+        <TextView
+            android:id="@+id/tvWeatherDesc"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="15sp"
+            />
+
+    </LinearLayout>
+
+</LinearLayout>
