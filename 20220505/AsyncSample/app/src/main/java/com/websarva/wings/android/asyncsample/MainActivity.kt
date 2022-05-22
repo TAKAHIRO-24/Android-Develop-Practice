@@ -8,9 +8,11 @@ import android.view.View
 import android.widget.AdapterView
 import android.widget.ListView
 import android.widget.SimpleAdapter
+import android.widget.TextView
 import androidx.annotation.UiThread
 import androidx.annotation.WorkerThread
 import androidx.core.os.HandlerCompat
+import org.json.JSONObject
 import java.io.BufferedInputStream
 import java.io.BufferedReader
 import java.io.InputStream
@@ -109,7 +111,7 @@ class MainActivity : AppCompatActivity() {
             }
 
             //非同期処理完了後の処理
-            val postExecutor = WeatherInfoPostExecutor()
+            val postExecutor = WeatherInfoPostExecutor(result)
             //Handlerオブジェクトを生成した元スレッドで処理を行う。
             _handler.post(postExecutor)
         }
@@ -131,10 +133,86 @@ class MainActivity : AppCompatActivity() {
     }
 
     //非同期でお天気情報を取得した後にUIスレッドでその情報を表示するためのクラス。
-    private inner class WeatherInfoPostExecutor() : Runnable {
+    private inner class WeatherInfoPostExecutor(result: String) : Runnable {
+        //取得したお天気情報JSON文字列。
+        private val _result = result
+
         @UiThread //UIスレッドで実行されることがコンパイラによって保証
         override fun run() {
             //ここにUIスレッドで行う処理コードを記述。
+
+//レスポンスJSONデータは以下の通り。
+//            {
+//                "coord": {
+//                "lon": -122.08,
+//                "lat": 37.39
+//            },
+//                "weather": [
+//                {
+//                    "id": 800,
+//                    "main": "Clear",
+//                    "description": "clear sky",
+//                    "icon": "01d"
+//                }
+//                ],
+//                "base": "stations",
+//                "main": {
+//                "temp": 282.55,
+//                "feels_like": 281.86,
+//                "temp_min": 280.37,
+//                "temp_max": 284.26,
+//                "pressure": 1023,
+//                "humidity": 100
+//            },
+//                "visibility": 10000,
+//                "wind": {
+//                "speed": 1.5,
+//                "deg": 350
+//            },
+//                "clouds": {
+//                "all": 1
+//            },
+//                "dt": 1560350645,
+//                "sys": {
+//                "type": 1,
+//                "id": 5122,
+//                "message": 0.0139,
+//                "country": "US",
+//                "sunrise": 1560343627,
+//                "sunset": 1560396563
+//            },
+//                "timezone": -25200,
+//                "id": 420006353,
+//                "name": "Mountain View",
+//                "cod": 200
+//            }
+
+            //ルートJSONオブジェクトを生成。
+            val rootJSON = JSONObject(_result)
+            //都市名文字列を取得。
+            val cityName = rootJSON.getString("name")
+            //緯度経度情報JSONオブジェクトを取得。
+            val coordJSON = rootJSON.getJSONObject("coord")
+            //緯度情報文字列を取得。
+            val latitude = coordJSON.getString("lat")
+            //経度情報文字列を取得。
+            val longitude = coordJSON.getString("lon")
+            //天気情報JSON配列オブジェクトを取得。
+            val weatherJSONArray = rootJSON.getJSONArray("weather")
+            //現在の天気情報JSONオブジェクトを取得。
+            val weatherJSON = weatherJSONArray.getJSONObject(0)
+            //現在の天気情報文字列を取得。
+            val weather = weatherJSON.getString("description")
+            //画面に表示する「〇〇の天気」文字列を生成。
+            val telop = "${cityName}の天気"
+            //天気の詳細情報を表示する文字列を生成。
+            val desc = "現在は${weather}です。\n緯度は${latitude}度で経度は${longitude}度です。"
+            //天気情報を表示するTextViewを取得。
+            val tvWeatherTelop = findViewById<TextView>(R.id.tvWeatherTelop)
+            val tvWeatherDesc = findViewById<TextView>(R.id.tvWeatherDesc)
+            //天気情報を表示。
+            tvWeatherTelop.text = telop
+            tvWeatherDesc.text = desc
         }
     }
 
