@@ -10,6 +10,10 @@ import android.widget.SimpleAdapter
 import android.widget.TextView
 import androidx.annotation.UiThread
 import androidx.annotation.WorkerThread
+import androidx.lifecycle.lifecycleScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import org.json.JSONObject
 import java.io.BufferedReader
 import java.io.InputStream
@@ -50,29 +54,46 @@ class MainActivity : AppCompatActivity() {
     @UiThread
     private fun receiveWeatherInfo(urlFull: String) {
         //ここにコルーチンに関するコードを記述
+        //下記のlifecycleScope.launch内の処理とその他の処理が非同期となる。
+        lifecycleScope.launch {
+            val result = weatherInfoBackgroundRunner(urlFull)
+            weatherInfoPostRunner(result)
+        }
+        //以下にその他の処理を記載する場合、lifecycleScope.launch内の処理の終了を待たずに下記の処理が実行される。
+        //showData()
     }
 
     @WorkerThread
-    private fun weatherInfoBackgroudRunner(url: String): String {
-        var result = ""
-        val url = URL(url)
-        val con = url.openConnection() as? HttpURLConnection
-        con?.let {
-            try {
-                it.connectTimeout = 1000
-                it.readTimeout = 1000
-                it.requestMethod = "GET"
-                it.connect()
-                val stream = it.inputStream
-                result = is2String(stream)
-                stream.close()
+    //suspendを記述することでweatherInfoBackgroundRunnerメソッド処理中にコルーチン内の他の処理を中断させる。
+    //withContext関数でスレッド分離しているため、suspendを記述しないと、同じコルーチンスコープ内のweatherInfoPostRunner()が
+    //weatherInfoBackgroundRunner()終了前に実行されてしまう。
+    private suspend fun weatherInfoBackgroundRunner(url: String): String {
+        //withContext関数でスレッド分離。
+        //Dispatchers.Main : メインスレッド
+        //Dispatchers.IO : ワーカースレッド
+        val returnVal = withContext(Dispatchers.IO) {
+            //ワーカースレッドで行う処理。
+            var result = ""
+            val url = URL(url)
+            val con = url.openConnection() as? HttpURLConnection
+            con?.let {
+                try {
+                    it.connectTimeout = 1000
+                    it.readTimeout = 1000
+                    it.requestMethod = "GET"
+                    it.connect()
+                    val stream = it.inputStream
+                    result = is2String(stream)
+                    stream.close()
+                }
+                catch (ex: SocketTimeoutException) {
+                    Log.w(DEBUG_TAG, "通信タイムアウト", ex)
+                }
+                it.disconnect()
             }
-            catch (ex: SocketTimeoutException) {
-                Log.w(DEBUG_TAG, "通信タイムアウト", ex)
-            }
-            it.disconnect()
+            result
         }
-        return result
+        return returnVal
     }
 
     private fun weatherInfoPostRunner(result: String) {
