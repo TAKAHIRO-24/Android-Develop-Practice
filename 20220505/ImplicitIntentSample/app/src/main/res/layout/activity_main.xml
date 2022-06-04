@@ -1,18 +1,85 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
-
-    <TextView
-        android:layout_width="wrap_content"
+    android:orientation="vertical"
+    >
+<!--    キーワード入力用のEditTextと「地図検索」ボタンを横並びにするためのLinearLayout-->
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:orientation="horizontal"
+        >
+<!--        キーワード入力用のEditText-->
+        <EditText
+            android:id="@+id/etSearchWord"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            />
+<!--        「地図検索」ボタン-->
+        <Button
+            android:id="@+id/btMapSearch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="onMapSearchButtonClick"
+            android:text="@string/bt_map_search"
+            />
+    </LinearLayout>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+<!--    現在地の緯度と経度を表示するTextViewと「地図表示」ボタンを横並びにするためのLinearLayout-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        >
+<!--        「現在地」と表示するTextView-->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="5dp"
+            android:text="@string/tv_current_title"
+            />
+<!--        「緯度：」と表示するTextView-->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="5dp"
+            android:text="@string/tv_latitude_title"
+            />
+<!--        位置情報で取得した緯度を表示するTextView-->
+<!--        maxLines属性で表示行数を制限できる。折り返し表示防止のために1を設定。-->
+        <TextView
+            android:id="@+id/tvLatitude"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="5dp"
+            android:layout_weight="0.5"
+            android:maxLines="1"
+            />
+<!--        「経度：」と表示するTextView-->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="5dp"
+            android:text="@string/tv_longitude_title"
+            />
+<!--        位置情報で取得した経度を表示するTextView-->
+        <TextView
+            android:id="@+id/tvLongitude"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.5"
+            android:maxLines="1"
+            />
+<!--        「地図表示」ボタン-->
+        <Button
+            android:id="@+id/btMapShowCurrent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="onMapShowCurrentButtonClick"
+            android:text="@string/bt_map_current"
+            />
+    </LinearLayout>
+</LinearLayout>
