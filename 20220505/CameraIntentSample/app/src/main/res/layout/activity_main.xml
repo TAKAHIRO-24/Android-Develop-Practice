@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--scaleType:centerで画像をImageViewの中央に配置-->
+<!--srcCompatで表示する画像ソースを指定。ここではAndroid SDKで用意されたカメラアイコンを使用。-->
+<ImageView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/ivCamera"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center"
+    android:onClick="onCameraImageClick"
+    android:scaleType="center"
+    app:srcCompat="@android:drawable/ic_menu_camera"
+    />
